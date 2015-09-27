@@ -12,14 +12,14 @@ from .models import Pattern, hasPattern
 from .models import Material, hasMaterial
 from .models import Brand
 
-"""class CategoryInline(admin.TabularInline):
+class CategoryInline(admin.TabularInline):
 	model = Category
 	extra = 1
 	verbose_name = "Category"
 	verbose_name_plural = "Categories"
 
 class CategoryAdmin(admin.ModelAdmin):
-	inlines = [CategoryInline]"""
+	inlines = [CategoryInline]
 
 class hasCategoryInline(admin.TabularInline):
 	model = hasCategory
