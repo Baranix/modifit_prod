@@ -104,6 +104,7 @@ class hasMaterial(models.Model):
 	)
 
 class Category(models.Model):
+	parent = models.ForeignKey('self', null=True, blank=True)
 	category_name = models.CharField(max_length=150, unique=True, verbose_name="Category")
 
 	def __unicode__(self):
@@ -113,19 +114,19 @@ class Category(models.Model):
 		verbose_name = "Category"
 		verbose_name_plural = "Categories"
 
-class SubCategory(models.Model):
+"""class SubCategory(models.Model):
 	category = models.ForeignKey(Category)
 	subcategory_name = models.CharField(max_length=150, unique=True, verbose_name="Subcategory")
 
 	def __unicode__(self):
-		return self.subcategory_name
+		return self.subcategory_name"""
 
-class hasSubCategory(models.Model):
+class hasCategory(models.Model):
 	item = models.ForeignKey(Item)
-	subcategory = models.ForeignKey(SubCategory)
+	category = models.ForeignKey(Category)
 
 	def __unicode__(self):
-		return "Subcategory"
+		return "Category"
 
 class Wardrobe(models.Model):
 	user = models.ForeignKey(User)

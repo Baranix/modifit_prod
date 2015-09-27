@@ -7,25 +7,25 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from .models import Item, hasSize, hasColor
-from .models import Category, SubCategory, hasSubCategory
+from .models import Category, hasCategory
 from .models import Pattern, hasPattern
 from .models import Material, hasMaterial
 from .models import Brand
 
-class SubCategoryInline(admin.TabularInline):
-	model = SubCategory
+class CategoryInline(admin.TabularInline):
+	model = Category
 	extra = 1
-	verbose_name = "Subcategory"
-	verbose_name_plural = "Subcategories"
+	verbose_name = "Category"
+	verbose_name_plural = "Categories"
 
 class CategoryAdmin(admin.ModelAdmin):
-	inlines = [SubCategoryInline]
+	inlines = [CategoryInline]
 
-class hasSubCategoryInline(admin.TabularInline):
-	model = hasSubCategory
+class hasCategoryInline(admin.TabularInline):
+	model = hasCategory
 	extra = 1
-	verbose_name = "Subcategory"
-	verbose_name_plural = "Subcategories"
+	verbose_name = "Category"
+	verbose_name_plural = "Categories"
 
 class hasPatternInline(admin.TabularInline):
 	model = hasPattern
@@ -53,7 +53,7 @@ class hasColorInline(admin.TabularInline):
 
 class ItemAdmin(admin.ModelAdmin):
 	inlines = [
-		hasSubCategoryInline,
+		hasCategoryInline,
 		hasSizeInline,
 		hasColorInline,
 		hasPatternInline, 
@@ -64,11 +64,10 @@ class ItemAdmin(admin.ModelAdmin):
 		(None, {'fields': ['item_name', 'brand', 'published']}),
 	]
 	
-	list_display = ('thumbnail', 'item_name', 'category', 'subcategory', 'brand', 'edited', 'created', 'published')
+	list_display = ('thumbnail', 'item_name', 'category', 'brand', 'edited', 'created', 'published')
 
 	list_filter = (
-		'hassubcategory__subcategory__category__category_name',
-		'hassubcategory__subcategory__subcategory_name',
+		'hascategory__category__category_name',
 		'brand',
 		'created_on',
 		'published',
@@ -76,8 +75,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 	search_fields = [
 		'item_name',
-		'hassubcategory__subcategory__category__category_name',
-		'hassubcategory__subcategory__subcategory_name',
+		'hascategory__category__category_name',
 	]
 
 	def thumbnail(self, obj):
@@ -98,20 +96,14 @@ class ItemAdmin(admin.ModelAdmin):
 	edited.allow_tags = True
 	created.allow_tags = True
 
-	def subcategory(self, obj):
-		hassubcat = hasSubCategory.objects.get(item_id=obj.id)
-		subcat = SubCategory.objects.get(id=hassubcat.subcategory_id)
-		return subcat
-
 	def category(self, obj):
-		hassubcat = hasSubCategory.objects.get(item_id=obj.id)
-		subcat = SubCategory.objects.get(id=hassubcat.subcategory_id)
-		cat = Category.objects.get(id=subcat.category_id)
+		hascat = hasCategory.objects.get(item_id=obj.id)
+		#subcat = SubCategory.objects.get(id=hassubcat.subcategory_id)
+		cat = Category.objects.get(id=hascat.category_id)
 		return cat
 
 	# Allow Sortable columns
-	subcategory.admin_order_field = 'hassubcategory__subcategory'
-	category.admin_order_field = 'hassubcategory__subcategory__category'
+	category.admin_order_field = 'hascategory__category'
 	edited.admin_order_field = 'edited_on'
 	created.admin_order_field = 'created_on'
 
@@ -129,3 +121,9 @@ admin.site.register(Item, ItemAdmin)
 admin.site.register(Pattern)
 admin.site.register(Material)
 admin.site.register(Brand)
+
+
+"""	def subcategory(self, obj):
+		hassubcat = hasSubCategory.objects.get(item_id=obj.id)
+		subcat = SubCategory.objects.get(id=hassubcat.subcategory_id)
+		return subcat"""
