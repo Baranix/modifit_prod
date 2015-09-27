@@ -116,7 +116,7 @@ class ItemAdmin(admin.ModelAdmin):
 			obj.created_on = timezone.now()
 		obj.save()
 
-admin.site.register(Category, CategoryAdmin)
+admin.site.register(Category)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Pattern)
 admin.site.register(Material)
