@@ -21,6 +21,8 @@ from .models import Brand
 class CategoryAdmin(admin.ModelAdmin):
 	list_display = ('category_name', 'parent')
 
+	list_filter = ( ('parent', admin.RelatedOnlyFieldListFilter) ,)
+
 class hasCategoryInline(admin.TabularInline):
 	model = hasCategory
 	extra = 1
