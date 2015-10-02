@@ -16,10 +16,10 @@ from .models import Brand
 	model = Category
 	extra = 1
 	verbose_name = "Category"
-	verbose_name_plural = "Categories"
+	verbose_name_plural = "Categories"""
 
 class CategoryAdmin(admin.ModelAdmin):
-	inlines = [CategoryInline]"""
+	list_display = ('category_name', 'parent')
 
 class hasCategoryInline(admin.TabularInline):
 	model = hasCategory
@@ -119,7 +119,7 @@ class ItemAdmin(admin.ModelAdmin):
 			obj.created_on = timezone.now()
 		obj.save()
 
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Pattern)
 admin.site.register(Material)
