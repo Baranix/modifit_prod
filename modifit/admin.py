@@ -11,6 +11,7 @@ from .models import Category, hasCategory
 from .models import Pattern, hasPattern
 from .models import Material, hasMaterial
 from .models import Brand
+from .models import Wardrobe
 
 """class CategoryInline(admin.TabularInline):
 	model = Category
@@ -18,10 +19,17 @@ from .models import Brand
 	verbose_name = "Category"
 	verbose_name_plural = "Categories"""
 
+class WardrobeAdmin(admin.ModelAdmin):
+	list_display = ( 'user_id', 'item_id', 'times_used' )
+
+	list_filter = ( 'user_id__username', )
+
+
 class CategoryAdmin(admin.ModelAdmin):
 	list_display = ('category_name', 'parent')
 
 	list_filter = ( ('parent', admin.RelatedOnlyFieldListFilter) ,)
+
 
 class hasCategoryInline(admin.TabularInline):
 	model = hasCategory
@@ -126,6 +134,7 @@ admin.site.register(Item, ItemAdmin)
 admin.site.register(Pattern)
 admin.site.register(Material)
 admin.site.register(Brand)
+admin.site.register(Wardrobe, WardrobeAdmin)
 
 
 """	def subcategory(self, obj):
