@@ -131,4 +131,4 @@ class hasCategory(models.Model):
 class Wardrobe(models.Model):
 	user = models.ForeignKey(User)
 	item = models.ForeignKey(Item)
-	times_used = models.PositiveIntegerField(default=0)
+	rating = models.PositiveIntegerField(default=0)

@@ -20,7 +20,7 @@ from .models import Wardrobe
 	verbose_name_plural = "Categories"""
 
 class WardrobeAdmin(admin.ModelAdmin):
-	list_display = ( 'user_id', 'item_id', 'times_used' )
+	list_display = ( 'user_id', 'item_id', 'rating' )
 
 	list_filter = ( 'user_id__username', )
 
