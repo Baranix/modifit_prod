@@ -1,0 +1,16 @@
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>Your Wardrobe - Modifit</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
+	</head>
+	<body>
+		<h1>{{ name }}'s Wardrobe</h1>
+
+		<form action="/logout/" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Logout" />
+		</form>
+	</body>
+</html>

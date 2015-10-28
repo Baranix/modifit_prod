@@ -1,0 +1,138 @@
+@font-face
+{
+	font-family: Existence;
+	src: url('Existence-Light.ttf');
+}
+
+@font-face
+{
+	font-family: Asap;
+	src: url('Asap-Regular.ttf');
+}
+
+
+body
+{
+	font-family: Asap;
+	background-color: #5B0C41;
+}
+
+a
+{
+	color: #A95B8F;
+	text-decoration: none;
+}
+a:hover
+{
+	text-decoration: underline;
+}
+
+#login_content
+{
+	/*background-color: #5B0C41;
+	border-radius: 10px;*/
+	width: 350px;
+	padding-bottom: 10px;
+	margin: 0px auto;
+}
+
+#login_content h1
+{
+	margin-top: 35%;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 300px;
+	height: 100px;
+	line-height: 100px;
+	white-space: nowrap;
+}
+
+h1
+{
+	color: #CF9ABE;
+	font-family: Existence;
+	font-size: 80px;
+	text-shadow: 2px 2px 5px #340023;
+}
+
+th
+{
+	font-weight: normal !important;
+}
+
+#login_form
+{
+	width: 300px;
+	margin: 0px auto;
+	/*border: 1px solid #A95B8F;
+	border-radius: 10px;*/
+}
+
+#login_form form
+{
+	margin: 0px auto !important;
+	padding: 10px;
+}
+
+#login_form table
+{
+	text-align: center;
+	margin: 0px auto;
+	color: #CF9ABE;
+}
+
+#login_form td
+{
+	padding: 5px;
+}
+
+input[type='text'], input[type='password']
+{
+	border-radius: 5px;
+	border: 1px solid #822B66;
+	padding: 3px;
+	font-family: Helvetica;
+	background: #A95B8F;
+}
+
+input[type='text']:focus, input[type='password']:focus
+{
+	/*outline-color: #CF9ABE;*/
+	outline: none;
+	box-shadow: 0px 0px 7px #000000;
+}
+
+input[type='submit']
+{
+	margin-top: 45px;
+	background: #CF9ABE;
+	border: 0px;
+	box-shadow: 2px 2px 5px #340023;
+	width: 100px;
+	height: 25px;
+	border-radius: 10px;
+	font-family: Asap;
+	font-size: 14px;
+	color: #340023;
+}
+
+.alert_box
+{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
+	width: 400px;
+	text-align: center;
+}
+
+.alert_box_head
+{
+	margin-bottom: 20px;
+	color: #CF9ABE;
+	font-family: Existence;
+	font-size: 24px;
+	font-weight: 900;
+	text-shadow: 2px 2px 5px #340023;
+}
