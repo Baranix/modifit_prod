@@ -3,14 +3,14 @@ from django.contrib import admin
 # Register your models here.
 
 from django.utils import timezone
-
 from django.contrib.auth.models import User
+from .models import Item, hasAttribute, hasCategory, Category
 
-from .models import Item, hasSize, hasColor
-from .models import Category, hasCategory
-from .models import Pattern, hasPattern
-from .models import Material, hasMaterial
-from .models import Brand
+from .models import Style, Color, Pattern, Material, Decoration, Silhouette, Clothing_Length, Neckline, Collar, Sleeve_Length
+from .models import Sleeve_Style, Sweater_Type, Jacket_Type, Blazer_Type, Sweatshirt_Type, Jumpsuit_Type, Outerwear_Structure
+from .models import Pants_Structure, Top_Length, Pants_Length, Shorts_Length, Skirt_Length, Fit_Type, Waist_Type
+from .models import Outerwear_Closure_Type, Bottom_Closure_Type, Front_Style
+
 from .models import Wardrobe
 
 """class CategoryInline(admin.TabularInline):
@@ -26,10 +26,7 @@ class WardrobeAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-	list_display = ('category_name', 'parent')
-
-	list_filter = ( ('parent', admin.RelatedOnlyFieldListFilter) ,)
-
+	list_display = ('name',)
 
 class hasCategoryInline(admin.TabularInline):
 	model = hasCategory
@@ -37,62 +34,76 @@ class hasCategoryInline(admin.TabularInline):
 	verbose_name = "Category"
 	verbose_name_plural = "Categories"
 
+class hasAttributeInline(admin.TabularInline):
+	model = hasAttribute
+	extra = 1
+	verbose_name = "Attribute"
+	verbose_name_plural = verbose_name + "s"
+
+"""class hasStyleInline(admin.TabularInline):
+	model = Style
+	extra = 1
+	verbose_name = "Style"
+	verbose_name_plural = verbose_name + "s"
+
 class hasPatternInline(admin.TabularInline):
-	model = hasPattern
+	model = Pattern
 	extra = 1
 	verbose_name = "Pattern"
-	verbose_name_plural = "Patterns"
+	verbose_name_plural = verbose_name + "s"
 
 class hasMaterialInline(admin.TabularInline):
-	model = hasMaterial
+	model = Material
 	extra = 1
 	verbose_name = "Material"
-	verbose_name_plural = "Materials"
-
-class hasSizeInline(admin.TabularInline):
-	model = hasSize
-	extra = 1
-	verbose_name = "Size"
-	verbose_name_plural = "Sizes"
+	verbose_name_plural = verbose_name + "s"
 
 class hasColorInline(admin.TabularInline):
-	model = hasColor
+	model = Color
 	extra = 1
 	verbose_name = "Color"
-	verbose_name_plural = "Colors"
+	verbose_name_plural = verbose_name + "s"
+
+class hasDecorationInline(admin.TabularInline):
+	model = Decoration
+	extra = 1
+	verbose_name = "Decoration"
+	verbose_name_plural = verbose_name + "s"
+
+class hasSilhouetteInline(admin.TabularInline):
+	model = Silhouette
+	extra = 1
+	verbose_name = "Silhouette"
+	verbose_name_plural = verbose_name + "s"""
 
 class ItemAdmin(admin.ModelAdmin):
 	inlines = [
 		hasCategoryInline,
-		hasSizeInline,
-		hasColorInline,
-		hasPatternInline, 
-		hasMaterialInline
+		hasAttributeInline
 	]
 
 	fieldsets = [
-		(None, {'fields': ['item_name', 'brand', 'published']}),
+		(None, {'fields': ['name', 'published']}),
 	]
 	
-	list_display = ('thumbnail', 'item_name', 'category', 'brand', 'edited', 'created', 'published')
+	list_display = ('thumbnail', 'name', 'category', 'edited', 'created', 'published',)
 
 	list_filter = (
-		'hascategory__category__category_name',
-		'brand',
+		'hascategory__category__name',
 		'created_on',
 		'published',
 	)
 
 	search_fields = [
-		'item_name',
-		'hascategory__category__category_name',
+		'name',
+		'hascategory__category__name',
 	]
 
 	def thumbnail(self, obj):
-		color = hasColor.objects.filter(item_id=obj.id)
+		color = Item.objects.filter(id=obj.id)
 		all_thumbs = ''
-		for i in range(color.count()):
-			all_thumbs = all_thumbs + '<img src="' + color[i].image.url + '" style="height:85px; width:auto;" />'
+		for i in range(img.count()):
+			all_thumbs = all_thumbs + '<img src="' + img[i].image.url + '" style="height:85px; width:auto;" />'
 		return all_thumbs
 
 	def edited(self, obj):
@@ -131,9 +142,6 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Item, ItemAdmin)
-admin.site.register(Pattern)
-admin.site.register(Material)
-admin.site.register(Brand)
 admin.site.register(Wardrobe, WardrobeAdmin)
 
 
