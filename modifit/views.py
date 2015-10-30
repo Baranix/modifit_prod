@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from .forms import LoginForm
+from .forms import LoginForm, RegForm
 
 # Create your views here.
 
@@ -73,6 +73,51 @@ def home(request):
 def logging_out(request):
 	logout(request)
 	return render( request, 'modifit/logout.html' )
+
+def register(request):
+	error_message = ''
+	if request.POST:
+		form = RegForm(request.POST)
+		if form.is_valid():
+			username = request.POST.get('username')
+			email = request.POST.get('email')
+			password = request.POST.get('password')
+			first_name = request.POST.get('first_name')
+			last_name = request.POST.get('last_name')
+
+			if username and email and password:
+				newUser = True
+				if User.objects.filter(username=username).exists():
+					error_message = error_message + "Username already exists. "
+					newUser = False
+				if User.objects.filter(email=email).exists():
+					error_message = error_message + "Email already in use. "
+					newUser = False
+				if( newUser ):
+					user = User.objects.create_user(
+							username=username,
+							email=email,
+							password=password,
+							first_name=first_name,
+							last_name=last_name
+						)
+					return HttpResponseRedirect('/reg_success/')
+
+			elif username is None:
+				error_message = error_message + "Username is missing! "
+			elif password is None:
+				error_message = error_message + "Password is missing! "
+			elif email is None:
+				error_message = error_message + "Email address is missing! "
+			else:
+				error_message = error_message + "An unknown error has occurred! Please email me immediately at nikki.ebora@gmail.com "
+	else:
+		form = RegForm()
+
+	return render_to_response( 'modifit/register.html', { 'form': form, 'error_message': error_message }, context_instance=RequestContext(request) )
+
+def reg_success(request):
+	return render(request, 'modifit/reg_success.html')
 
 
 def wardrobe(request, wardrobe_id):
