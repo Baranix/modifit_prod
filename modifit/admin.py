@@ -84,6 +84,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 	fieldsets = [
 		(None, {'fields': ['name', 'published']}),
+		("Image File", {'fields': ['image']})
 	]
 	
 	list_display = ('thumbnail', 'name', 'category', 'edited', 'created', 'published',)
@@ -100,7 +101,7 @@ class ItemAdmin(admin.ModelAdmin):
 	]
 
 	def thumbnail(self, obj):
-		color = Item.objects.filter(id=obj.id)
+		img = Item.objects.filter(id=obj.id)
 		all_thumbs = ''
 		for i in range(img.count()):
 			all_thumbs = all_thumbs + '<img src="' + img[i].image.url + '" style="height:85px; width:auto;" />'
