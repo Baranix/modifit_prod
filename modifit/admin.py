@@ -4,6 +4,8 @@ from django.contrib import admin
 
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils.encoding import uri_to_iri
+
 from .models import Item, hasAttribute, hasCategory, Category
 
 from .models import Style, Color, Pattern, Material, Decoration, Silhouette, Clothing_Length, Neckline, Collar, Sleeve_Length
@@ -104,7 +106,8 @@ class ItemAdmin(admin.ModelAdmin):
 		img = Item.objects.filter(id=obj.id)
 		all_thumbs = ''
 		for i in range(img.count()):
-			all_thumbs = all_thumbs + '<img src="' + img[i].image.url + '" style="height:85px; width:auto;" />'
+			url = uri_to_iri(img[i].image.url[len('/media/'):])
+			all_thumbs = all_thumbs + '<img src="' + url + '" style="height:85px; width:auto;" />'
 		return all_thumbs
 
 	def edited(self, obj):
