@@ -24,11 +24,11 @@ import datetime
 
 class Item(models.Model):
 	name = models.CharField(max_length=250)
-	image = models.ImageField(upload_to='img/items')
+	image = models.URLField()
 	created_by = models.ForeignKey(User, related_name='created_by')
 	created_on = models.DateTimeField(auto_now_add=True, verbose_name="Created date")
 	edited_by = models.ForeignKey(User, related_name='edited_by', null=True, blank=True, verbose_name="Last edited by")
-	edited_on = models.DateTimeField(auto_now=True, null=True, blank=True, verbose_name="Last edited date")
+	edited_on = models.DateTimeField(auto_now=True, verbose_name="Last edited date")
 	published = models.BooleanField(default=False, verbose_name="Publish?")
 
 	def __unicode__(self):

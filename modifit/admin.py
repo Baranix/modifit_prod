@@ -106,7 +106,7 @@ class ItemAdmin(admin.ModelAdmin):
 		img = Item.objects.filter(id=obj.id)
 		all_thumbs = ''
 		for i in range(img.count()):
-			url = uri_to_iri(img[i].image.url[len('/media/'):])
+			url = uri_to_iri(img[i].image)
 			all_thumbs = all_thumbs + '<img src="' + url + '" style="height:85px; width:auto;" />'
 		return all_thumbs
 
