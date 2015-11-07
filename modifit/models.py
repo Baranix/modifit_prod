@@ -54,33 +54,31 @@ class hasCategory(models.Model):
 
 class hasAttribute(models.Model):
 	ATTRIBUTE_TYPE_CHOICES = (
-		(1, "Style"),
-		(2, "Color"),
-		(3, "Pattern"),
-		(4, "Material"),
-		(5, "Decoration"),
-		(6, "Silhouette"),
-		(7, "Clothing Length"),
-		(8, "Neckline"),
-		(9, "Collar"),
-		(10, "Sleeve Length"),
-		(11, "Sleeve Style"),
-		(12, "Sweater Type"),
-		(13, "Jacket Type"),
-		(14, "Blazer Type"),
-		(15, "Sweatshirt Type"),
-		(16, "Jumpsuit Type"),
-		(17, "Outerwear Structure"),
-		(18, "Pants Structure"),
-		(19, "Top Length"),
-		(20, "Pants Length"),
-		(21, "Shorts Length"),
-		(22, "Skirt Length"),
-		(23, "Fit Type"),
-		(24, "Waist Type"),
-		(25, "Outerwear Closure Type"),
-		(26, "Bottom Closure Type"),
-		(27, "Front Style"),
+		(1, "Sweater Type"),
+		(2, "Jacket Type"),
+		(3, "Blazer Type"),
+		(4, "Sweatshirt Type"),
+		(5, "Jumpsuit Type"),
+		(6, "Style"),
+		(7, "Color"),
+		(8, "Pattern"),
+		(9, "Material"),
+		(10, "Silhouette"),
+		(11, "Outerwear Structure"),
+		(12, "Pants Structure"),
+		(13, "Decoration"),
+		(14, "Neckline"),
+		(15, "Sleeve Length"),
+		(16, "Sleeve Style"),
+		(17, "Top Length"),
+		(18, "Pants Length"),
+		(19, "Shorts Length"),
+		(20, "Skirt Length"),
+		(21, "Fit Type"),
+		(22, "Waist Type"),
+		(23, "Outerwear Closure Type"),
+		(24, "Bottom Closure Type"),
+		(25, "Front Style"),
 	)
 
 	item = models.ForeignKey(Item)
@@ -129,19 +127,7 @@ class Silhouette(models.Model):
 	def __unicode__(self):
 		return self.name
 
-class Clothing_Length(models.Model):
-	name = models.CharField(max_length=100, unique=True)
-
-	def __unicode__(self):
-		return self.name
-
 class Neckline(models.Model):
-	name = models.CharField(max_length=100, unique=True)
-
-	def __unicode__(self):
-		return self.name
-
-class Collar(models.Model):
 	name = models.CharField(max_length=100, unique=True)
 
 	def __unicode__(self):

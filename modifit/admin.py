@@ -8,7 +8,7 @@ from django.utils.encoding import uri_to_iri
 
 from .models import Item, hasAttribute, hasCategory, Category
 
-from .models import Style, Color, Pattern, Material, Decoration, Silhouette, Clothing_Length, Neckline, Collar, Sleeve_Length
+from .models import Style, Color, Pattern, Material, Decoration, Silhouette, Neckline, Sleeve_Length
 from .models import Sleeve_Style, Sweater_Type, Jacket_Type, Blazer_Type, Sweatshirt_Type, Jumpsuit_Type, Outerwear_Structure
 from .models import Pants_Structure, Top_Length, Pants_Length, Shorts_Length, Skirt_Length, Fit_Type, Waist_Type
 from .models import Outerwear_Closure_Type, Bottom_Closure_Type, Front_Style
