@@ -27,6 +27,10 @@ class WardrobeAdmin(admin.ModelAdmin):
 	list_filter = ( 'user_id__username', )
 
 
+class NecklineAdmin(admin.ModelAdmin):
+	list_display = ('id','name',)
+
+
 class CategoryAdmin(admin.ModelAdmin):
 	list_display = ('name',)
 
@@ -147,6 +151,7 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Wardrobe, WardrobeAdmin)
+admin.site.register(Neckline, NecklineAdmin)
 
 
 """	def subcategory(self, obj):
