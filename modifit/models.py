@@ -77,9 +77,10 @@ class hasAttribute(models.Model):
 		(21, "Skirt Length"),
 		(22, "Fit Type"),
 		(23, "Waist Type"),
-		(24, "Outerwear Closure Type"),
-		(25, "Bottom Closure Type"),
-		(26, "Front Style"),
+		(24, "Top Closure Type"),
+		(25, "Outerwear Closure Type"),
+		(26, "Bottom Closure Type"),
+		(27, "Front Style"),
 	)
 
 	item = models.ForeignKey(Item)
@@ -213,6 +214,12 @@ class Skirt_Length(models.Model):
 		return self.name
 
 class Fit_Type(models.Model):
+	name = models.CharField(max_length=100, unique=True)
+
+	def __unicode__(self):
+		return self.name
+
+class Top_Closure_Type(models.Model):
 	name = models.CharField(max_length=100, unique=True)
 
 	def __unicode__(self):
