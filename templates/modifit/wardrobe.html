@@ -1,13 +1,50 @@
+{% load staticfiles %}
+
 <html>
 	<head>
-		<title>Wardrobe - Modifit</title>
+		<title>Your Wardrobe - Modifit</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 	</head>
 	<body>
+		<h1 id="name_addItems">{{ name }}'s Wardrobe</h1>
 
-	<h1>Wardrobe</h1>
+		<form action="/rate/" method="post">
+			{% csrf_token %}
+			<div class="content">
+				<table id="new_set">
+					<tr>
+						{% for i in wardrobe %}
+							{% cycle '' '' '' '' '</tr><tr>' %}
+								<td class="row_item">
+									<img src='{{ i.item.image }}' class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}-{{ i.item.name }}" />
+									<br>
+									<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
+									<div class="stars">
+										<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="5" {% if i.rating == 5 %}checked{% endif %} />
+										<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
+										<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="4" {% if i.rating == 4 %}checked{% endif %} />
+										<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
+										<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="3" {% if i.rating == 3 %}checked{% endif %} />
+										<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
+										<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="2" {% if i.rating == 2 %}checked{% endif %} />
+										<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
+										<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="1" {% if i.rating == 1 %}checked{% endif %} />
+										<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
+									</div>
+								</td>
+						{% endfor %}
+					</tr>
+				</table>
+			</div>
+			<input type="submit" value="Re-rate Items!" />
+		</form>
 
-	<p>{{ response }}</p>
-	<p>{{ user }}</p>
+		<button onclick="window.location.href='/home/'">Go back to add more items!</button>
 
+		<form action="/logout/" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Logout" />
+		</form>
 	</body>
 </html>
