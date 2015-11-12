@@ -15,7 +15,8 @@
 				<table id="new_set">
 					<tr>
 						{% for i in items %}
-							{% cycle '' '' '' '' '</tr><tr>' %}
+							<!--{% cycle '' '' '' '' '</tr><tr>' %}-->
+							{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}
 								<td class="row_item">
 									<img src='{{ i.image }}' class="item_image" id="item{{ i.id }}" alt="{{ i.id }}-{{ i.category.name }}" />
 									<br>

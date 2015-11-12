@@ -15,7 +15,7 @@
 				<table id="new_set">
 					<tr>
 						{% for i in wardrobe %}
-							{% cycle '' '' '' '' '</tr><tr>' %}
+							{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}
 								<td class="row_item">
 									<img src='{{ i.item.image }}' class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}-{{ i.item.name }}" />
 									<br>
