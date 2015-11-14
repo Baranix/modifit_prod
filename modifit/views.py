@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
+import json
+
 from .models import Item, hasCategory, Wardrobe
 
 from .forms import LoginForm, RegForm
@@ -144,39 +146,25 @@ def home(request):
 
 	return render( request, 'modifit/home.html', { 'name': name, 'items': items } )
 
+
 @login_required(login_url='/')
 def rate(request):
 	if request.POST:
 		for i in Item.objects.all():
-			#print
-			#print i
 
 			rate = request.POST.get('rate' + str(i.id))
-			#print rate
 			if rate is None:
-				"""print "Item: " + str(i.id)
-				print 'rate' + str(i.id)
-				print "Rate is None"""
 				continue
 
 			item_id = request.POST.get('item_id_' + str(i.id))
-			#print item_id
 			if item_id is not None:
 				try:
 					wardrobe = Wardrobe.objects.get(user_id=request.user.id, item_id=item_id)
 					wardrobe.rating = rate
 					wardrobe.save()
-					"""print
-					print "Item rated again."
-					print "Item: " + str(i.id)
-					print "Rating: " + str(rate)"""
 				except Wardrobe.DoesNotExist:
 					wardrobe = Wardrobe( user_id=request.user.id, item_id=i.id, rating=int(rate) )
 					wardrobe.save()
-					"""print
-					print "Item added to wardrobe."
-					print "Item: " + str(i.id)
-					print "Rating: " + str(rate)"""
 					
 		"""
 		rate = request.POST.get('rate'+str(1))
@@ -189,6 +177,27 @@ def rate(request):
 		return render(request, 'modifit/test.html', { 'name' : name, 'user_id' : user_id, 'item_id' : item_id, 'rate' : rate })
 		"""
 		return HttpResponseRedirect('/wardrobe/')
+
+@login_required(login_url='/')
+def remove_from_wardrobe(request):
+	if request.POST:
+		item = request.POST.get('itemToRemove')
+		response_data = {}
+
+		wardrobe = Wardrobe.objects.get( user_id=request.user.id, item_id=item ).delete()
+
+		response_data['result'] = 'Delete item successful!'
+
+		return HttpResponse(
+			json.dumps(response_data),
+			content_type="application/json"
+		)
+	else:
+		return HttpResponse(
+			json.dumps({"nothing to see": "this isn't happening"}),
+			content_type="application/json"
+		)
+
 
 @login_required(login_url='/')
 def wardrobe(request):

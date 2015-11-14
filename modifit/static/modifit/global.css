@@ -188,6 +188,12 @@ input[type='submit'], input[type='button'], button
 	height: 25px;
 }
 
+.removeItem
+{
+	width: 200px;
+	margin-top: 0px !important;
+}
+
 
 /* STAR RATINGS */
 
