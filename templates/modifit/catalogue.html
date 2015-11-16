@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Warehouse - Modifit</title>
+		<title>catalogue - Modifit</title>
 		<link rel="stylesheet" href="{% static 'modifit/bootstrap/css/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
@@ -16,11 +16,11 @@
 			{% csrf_token %}-->
 		<ul class="nav nav-tabs">
 			<li role="presentation" id="tabAll" class="active">
-				<a href="/warehouse/">All</a>
+				<a href="/catalogue/">All</a>
 			</li>
 			{% for c in categories %}
 				<li role="presentation" id="tab{{ c.name }}">
-					<a href="{% url 'warehouse_category' c.name %}">{{ c.name }}</a>
+					<a href="{% url 'catalogue_category' c.name %}">{{ c.name }}</a>
 				</li>
 			{% endfor %}
 		</ul>

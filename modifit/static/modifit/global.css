@@ -215,16 +215,30 @@ input[type='submit'], input[type='button'], button
 
 /* STAR RATINGS */
 
+.reset_rate
+{
+	color: #A95B8F;
+	padding-top: 5px;
+}
+
+.reset_rate:hover
+{
+	color: #CF9ABE;
+	transition: color .5s;
+}
+
 div.stars {
-	width: 140px;
+	width: 150px;
 	display: inline-block;
-	background: rgba(91, 12, 65, .7);
-	margin-left: 25px;
+	/*background: rgba(91, 12, 65, .7);*/
+	margin-left: 28px;
 }
 
 input.star { display: none; }
 
 label.star {
+	position: relative;
+	left: -5px;
 	float: right;
 	padding: 5px;
 	font-size: 16px;

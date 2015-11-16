@@ -20,8 +20,8 @@ from .forms import LoginForm, RegForm
 
 """from django.contrib.auth.decorators import login_required
 @login_required(login_url='/') #if not logged in redirect to /
-def warehouse(request):		
-	return render(request, 'modifit/warehouse.html')"""
+def catalogue(request):		
+	return render(request, 'modifit/catalogue.html')"""
 
 """def index(request):
 	state = "Please log in below..."
@@ -125,7 +125,7 @@ def reg_success(request):
 
 
 @login_required(login_url='/')
-def warehouse(request, category_name=None):
+def catalogue(request, category_name=None):
 	current_user = request.user
 	if current_user.first_name != '':
 		name = current_user.first_name
@@ -153,13 +153,33 @@ def warehouse(request, category_name=None):
 
 	categories = list(set([i.category for i in allFilteredCategorizedItems]))
 
-	return render( request, 'modifit/warehouse.html', { 'name': name, 'items': filteredCategorizedItems, 'categories' : categories } )
+	return render( request, 'modifit/catalogue.html', { 'name': name, 'items': filteredCategorizedItems, 'categories' : categories } )
 
 
 @login_required(login_url='/')
 def rate(request):
 	if request.POST:
-		for i in Item.objects.all():
+		item = request.POST.get('itemToRate')
+		rate = request.POST.get('rating')
+		response_data = {}
+
+		wardrobe = Wardrobe.objects.get( user_id=request.user.id, item_id=item )
+		wardrobe.rating = rate
+		wardrobe.save()
+
+		response_data['result'] = 'Rate item successful!'
+
+		return HttpResponse(
+			json.dumps(response_data),
+			content_type="application/json"
+		)
+	else:
+		return HttpResponse(
+			json.dumps({"nothing to see": "this isn't happening"}),
+			content_type="application/json"
+		)
+
+		"""for i in Item.objects.all():
 
 			rate = request.POST.get('rate' + str(i.id))
 			if rate is None:
@@ -173,7 +193,7 @@ def rate(request):
 					wardrobe.save()
 				except Wardrobe.DoesNotExist:
 					wardrobe = Wardrobe( user_id=request.user.id, item_id=i.id, rating=int(rate) )
-					wardrobe.save()
+					wardrobe.save()"""
 					
 		"""
 		rate = request.POST.get('rate'+str(1))
@@ -185,7 +205,7 @@ def rate(request):
 		#item_id = item.id
 		return render(request, 'modifit/test.html', { 'name' : name, 'user_id' : user_id, 'item_id' : item_id, 'rate' : rate })
 		"""
-		return HttpResponseRedirect('/wardrobe/')
+		#return HttpResponseRedirect('/wardrobe/')
 
 @login_required(login_url='/')
 def remove_from_wardrobe(request):
