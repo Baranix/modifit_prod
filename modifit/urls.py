@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^remove_from_wardrobe/$', views.remove_from_wardrobe, name='remove'),
     url(r'^wardrobe/$', views.wardrobe, name='wardrobe'),
     #url(r'^$', views.warehouse, name='warehouse'),
-    #url(r'^(?P<wardrobe_id>[0-9]+)/$', views.wardrobe, name='wardrobe'),
+    url(r'^warehouse/(?P<category_name>\D+)/$', views.warehouse, name='warehouse_category'),
 ]

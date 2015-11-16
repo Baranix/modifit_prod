@@ -125,7 +125,7 @@ def reg_success(request):
 
 
 @login_required(login_url='/')
-def warehouse(request):
+def warehouse(request, category_name=None):
 	current_user = request.user
 	if current_user.first_name != '':
 		name = current_user.first_name
@@ -142,9 +142,16 @@ def warehouse(request):
 	for i in wardrobe:
 		wardrobeItems.append(i.item)
 
+	allFilteredCategorizedItems = [i for i in categorized if i.item not in wardrobeItems]
+
 	#items = [i for i in categorizedItems if i not in wardrobeItems]
-	filteredCategorizedItems = [i for i in categorized if i.item not in wardrobeItems]
-	categories = list(set([i.category for i in filteredCategorizedItems]))
+	#print "Category name: " + str(category_name)
+	if category_name is not None:
+		filteredCategorizedItems = [i for i in allFilteredCategorizedItems if i.category.name == category_name]
+	else:
+		filteredCategorizedItems = allFilteredCategorizedItems
+
+	categories = list(set([i.category for i in allFilteredCategorizedItems]))
 
 	return render( request, 'modifit/warehouse.html', { 'name': name, 'items': filteredCategorizedItems, 'categories' : categories } )
 

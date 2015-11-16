@@ -15,12 +15,12 @@
 		<form action="/rate/" method="post">
 			{% csrf_token %}
 			<ul class="nav nav-tabs">
-				<li role="presentation" id="tabAll" class="active" onclick="changeCategory('All');">
-					<a href="#">All</a>
+				<li role="presentation" id="tabAll" class="active">
+					<a href="/warehouse/">All</a>
 				</li>
 				{% for c in categories %}
-					<li role="presentation" id="tab{{ c.name }}" class="" onclick="changeCategory('{{ c.name }}');">
-						<a href="#">{{ c.name }}</a>
+					<li role="presentation" id="tab{{ c.name }}">
+						<a href="{% url 'warehouse_category' c.name %}">{{ c.name }}</a>
 					</li>
 				{% endfor %}
 			</ul>
