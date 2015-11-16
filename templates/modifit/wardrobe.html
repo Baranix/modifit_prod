@@ -3,11 +3,11 @@
 <html>
 	<head>
 		<title>Your Wardrobe - Modifit</title>
-		<link rel="stylesheet" href="{% static 'modifit/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'modifit/bootstrap/css/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
 		<script src="{% static 'modifit/jquery-1.11.3.min.js' %}"></script>
-		<script src="{% static 'modifit/bootstrap.min.js' %}"></script>
+		<script src="{% static 'modifit/bootstrap/js/bootstrap.min.js' %}"></script>
 	</head>
 	<body>
 		<h1 id="name_addItems">{{ name }}'s Wardrobe</h1>
@@ -47,7 +47,11 @@
 			<input type="submit" value="Re-rate Items!" />
 		</form>
 
-		<button onclick="window.location.href='/warehouse/'">Add more items!</button>
+		<div id="goto">
+			<a class="goto" href='/warehouse/'>
+				Add more items!
+			</a>
+		</div>
 
 		<form action="/logout/" method="post">
 			{% csrf_token %}

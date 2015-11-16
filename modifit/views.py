@@ -207,6 +207,26 @@ def remove_from_wardrobe(request):
 			content_type="application/json"
 		)
 
+@login_required(login_url='/')
+def add_to_wardrobe(request):
+	if request.POST:
+		item = request.POST.get('itemToAdd')
+		response_data = {}
+
+		wardrobe = Wardrobe( user_id=request.user.id, item_id=item )
+		wardrobe.save()
+
+		response_data['result'] = 'Add item successful!'
+
+		return HttpResponse(
+			json.dumps(response_data),
+			content_type="application/json"
+		)
+	else:
+		return HttpResponse(
+			json.dumps({"nothing to see": "this isn't happening"}),
+			content_type="application/json"
+		)
 
 @login_required(login_url='/')
 def wardrobe(request):

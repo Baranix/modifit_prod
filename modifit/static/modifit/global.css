@@ -1,13 +1,13 @@
 @font-face
 {
 	font-family: Existence;
-	src: url('Existence-Light.ttf');
+	src: url('fonts/Existence-Light.ttf');
 }
 
 @font-face
 {
 	font-family: Asap;
-	src: url('Asap-Regular.ttf');
+	src: url('fonts/Asap-Regular.ttf');
 }
 
 
@@ -25,6 +25,7 @@ a
 a:hover
 {
 	text-decoration: underline;
+	color: #A95B8F;
 }
 
 .form_content
@@ -191,7 +192,24 @@ input[type='submit'], input[type='button'], button
 .removeItem
 {
 	width: 200px;
-	margin-top: 0px !important;
+	margin-top: 3px !important;
+}
+
+.in_wardrobe
+{
+	/*opacity: 0.6; /* Real browsers 
+	filter: alpha(opacity = 60); /* MSIE */
+	color: #CF9ABE;
+}
+
+.goto
+{
+	color: #CF9ABE;
+}
+
+#goto
+{
+	text-align: center;
 }
 
 

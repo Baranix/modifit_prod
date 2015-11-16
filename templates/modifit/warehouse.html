@@ -2,58 +2,65 @@
 
 <html>
 	<head>
-		<title>Your Wardrobe - Modifit</title>
-		<link rel="stylesheet" href="{% static 'modifit/bootstrap.min.css' %}">
+		<title>Warehouse - Modifit</title>
+		<link rel="stylesheet" href="{% static 'modifit/bootstrap/css/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
 		<script src="{% static 'modifit/jquery-1.11.3.min.js' %}"></script>
-		<script src="{% static 'modifit/bootstrap.min.js' %}"></script>
+		<script src="{% static 'modifit/bootstrap/js/bootstrap.min.js' %}"></script>
 	</head>
 	<body>
-		<h1 id="name_addItems">{{ name }}, rate items!</h1>
+		<h1 id="name_addItems">{{ name }}, get items!</h1>
 
-		<form action="/rate/" method="post">
-			{% csrf_token %}
-			<ul class="nav nav-tabs">
-				<li role="presentation" id="tabAll" class="active">
-					<a href="/warehouse/">All</a>
+		<!--<form action="/rate/" method="post">
+			{% csrf_token %}-->
+		<ul class="nav nav-tabs">
+			<li role="presentation" id="tabAll" class="active">
+				<a href="/warehouse/">All</a>
+			</li>
+			{% for c in categories %}
+				<li role="presentation" id="tab{{ c.name }}">
+					<a href="{% url 'warehouse_category' c.name %}">{{ c.name }}</a>
 				</li>
-				{% for c in categories %}
-					<li role="presentation" id="tab{{ c.name }}">
-						<a href="{% url 'warehouse_category' c.name %}">{{ c.name }}</a>
-					</li>
-				{% endfor %}
-			</ul>
-			<div class="content">
-				<table id="new_set">
-					<tr>
-						{% for i in items %}
-							{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}
-							<td class="row_item">
-								<img src="{{ i.item.image }}" class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}" />
-								<br>
-								<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
-								<div class="stars">
-									<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="5" />
-									<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
-									<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="4" />
-									<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
-									<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="3" />
-									<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
-									<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="2" />
-									<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
-									<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="1" />
-									<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
-								</div>
-							</td>
-						{% endfor %}
-					</tr>
-				</table>
-			</div>
-			<input type="submit" value="Add Items to Wardrobe" />
-		</form>
+			{% endfor %}
+		</ul>
+		<div class="content">
+			<table id="new_set">
+				<tr>
+					{% for i in items %}
+						{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}
+						<td class="row_item" id="element{{ i.item.id }}">
+							<img src="{{ i.item.image }}" class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}" />
+							<br>
+							<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
+							<div class="remove" id="add{{ i.item.id }}">
+								<button type="button" class="removeItem" onclick="addItem({{ i.item.id }}); return false;" />Add this item.</button>
+							</div>
+							<!--<div class="stars">
+								<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="5" />
+								<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
+								<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="4" />
+								<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
+								<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="3" />
+								<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
+								<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="2" />
+								<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
+								<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="1" />
+								<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
+							</div>-->
+						</td>
+					{% endfor %}
+				</tr>
+			</table>
+		</div>
+			<!--<input type="submit" value="Add Items to Wardrobe" />
+		</form>-->
 
-		<button onclick="window.location.href='/wardrobe/'">Your Wardrobe</button>
+		<div id="goto">
+			<a class="goto" href='/wardrobe/'>
+				Back to Wardrobe!
+			</a>
+		</div>
 
 		<form action="/logout/" method="post">
 			{% csrf_token %}
@@ -61,31 +68,34 @@
 		</form>
 
 		<script>
-			function changeCategory(category)
+			function addItem(item_id)
 			{
-
-				
-				var categoryCondition = '\{\% if True \%\}';
-				var endCategoryCondition = '\{\% endif \%\}';
-				switch(category)
-				{
-					{% for c in categorized %}
-					case '{{ c.category }}':
-						categoryCondition = '\{\% if "{{c.category}}" == i.item.category.name \%\}';
-					{% endfor %}
-				}
+				console.log("Adding: " + item_id);
+				$.ajax({
+					url : "/add_to_wardrobe/", // the endpoint
+					type : "POST", // http method
+					data : { itemToAdd : item_id,
+						csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
 
 
+					// handle a successful response
+					success : function(json)
+					{
+						console.log(json); // log the returned json to the console
+						console.log("success"); // another sanity check
+						$('#element' + item_id).addClass("in_wardrobe");
+						$('#add' + item_id).html('<span class="glyphicon glyphicon-ok" aria-hidden="true""></span> Item added');
 
-				console.log(categoryCondition);
-				var display = '<tr>{% for i in items %}{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}'
-							+ categoryCondition
-							+ '<td class="row_item"><img src="{{ i.item.image }}" class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}-{{ i.item.category.name }}" /><br><input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" /><div class="stars"><input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="5" /><label class="star star-5" for="star-5-{{ i.item.id }}"></label><input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="4" /><label class="star star-4" for="star-4-{{ i.item.id }}"></label><input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="3" /><label class="star star-3" for="star-3-{{ i.item.id }}"></label><input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="2" /><label class="star star-2" for="star-2-{{ i.item.id }}"></label><input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="1" /><label class="star star-1" for="star-1-{{ i.item.id }}"></label></div></td>'
-							+ endCategoryCondition
-							+ '{% endfor %}</tr>';
+					},
 
-				console.log(display);
-				$('#new_set').html(display);
+					// handle a non-successful response
+					error : function(xhr,errmsg,err)
+					{
+						$('#error').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+						" <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+						console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+					}
+				});
 			}
 
 		</script>
