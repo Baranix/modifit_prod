@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>catalogue - Modifit</title>
+		<title>Catalogue - Modifit</title>
 		<link rel="stylesheet" href="{% static 'modifit/bootstrap/css/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
@@ -30,7 +30,9 @@
 					{% for i in items %}
 						{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}
 						<td class="row_item" id="element{{ i.item.id }}">
-							<img src="{{ i.item.image }}" class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}" />
+							<a href="{% url 'item' i.item.id %}">
+								<img src="{{ i.item.image }}" class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}" />
+							</a>
 							<br>
 							<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
 							<div class="remove" id="add{{ i.item.id }}">

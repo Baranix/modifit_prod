@@ -15,6 +15,7 @@ body
 {
 	font-family: Asap;
 	background-color: #5B0C41;
+	color: #A95B8F;
 }
 
 a
@@ -264,4 +265,30 @@ label.star:hover { transform: rotate(-15deg) scale(1.3); }
 label.star:before {
 	content: '\f006';
 	font-family: FontAwesome;
+}
+
+/* ITEM PROFILE */
+
+#profile_item
+{
+	margin-left: 20px;
+}
+
+#profile_item_name
+{
+	font-family: Existence;
+	font-size: 24px;
+	font-weight: bolder;
+	margin-top: 10px;
+}
+
+.profile_item_img
+{
+	width: 400px;
+	height: auto;
+}
+
+.goback
+{
+	margin: 10px;
 }

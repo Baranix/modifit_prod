@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^wardrobe/$', views.wardrobe, name='wardrobe'),
     #url(r'^$', views.catalogue, name='catalogue'),
     url(r'^catalogue/(?P<category_name>\D+)/$', views.catalogue, name='catalogue_category'),
+    url(r'^item/(?P<item_id>[0-9]+)/$', views.item, name='item'),
 ]

@@ -8,7 +8,8 @@ from django.template import RequestContext
 
 import json
 
-from .models import Item, hasCategory, Wardrobe
+from .models import Item, hasCategory, Wardrobe, hasAttribute
+from .models import Sweater_Type, Jacket_Type, Blazer_Type, Sweatshirt_Type, Jumpsuit_Type, Style, Color, Pattern, Material, Silhouette, Outerwear_Structure, Pants_Structure, Decoration, Neckline, Sleeve_Length, Sleeve_Style, Top_Length, Pants_Length, Shorts_Length, Skirt_Length, Fit_Type, Waist_Type, Top_Closure_Type, Outerwear_Closure_Type, Bottom_Closure_Type, Front_Style
 
 from .forms import LoginForm, RegForm
 
@@ -257,3 +258,79 @@ def wardrobe(request):
 		name = current_user.username
 	wardrobe = Wardrobe.objects.filter(user_id=request.user.id)
 	return render(request, 'modifit/wardrobe.html', { 'name' : name, 'wardrobe' : wardrobe })
+
+def item(request, item_id=None):
+	if item_id is not None:
+		item = Item.objects.get(pk=item_id)
+		category = hasCategory.objects.get(item_id=item_id).category
+		attributes = hasAttribute.objects.filter(item_id=item_id)
+
+		attribute_set = []
+		attribute_tables = [Sweater_Type, Jacket_Type, Blazer_Type, Sweatshirt_Type, Jumpsuit_Type, Style, Color, Pattern, Material, Silhouette, Outerwear_Structure, Pants_Structure, Decoration, Neckline, Sleeve_Length, Sleeve_Style, Top_Length, Pants_Length, Shorts_Length, Skirt_Length, Fit_Type, Waist_Type, Top_Closure_Type, Outerwear_Closure_Type, Bottom_Closure_Type, Front_Style]
+		attribute_name = None
+		for attribute in attributes:
+			for i in attribute.ATTRIBUTE_TYPE_CHOICES:
+				if i[0] == attribute.attribute_type:
+					"""if i[0] == 15:
+						j = 13
+					else:
+						j = i[0]-1
+					attribute_name = attribute_tables[j].objects.get(pk=attribute.attribute_id).name"""
+					if i[0] == 1:
+						attribute_name = Sweater_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 2:
+						attribute_name = Jacket_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 3:
+						attribute_name = Blazer_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 4:
+						attribute_name = Sweatshirt_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 5:
+						attribute_name = Jumpsuit_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 6:
+						attribute_name = Style.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 7:
+						attribute_name = Color.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 8:
+						attribute_name = Pattern.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 9:
+						attribute_name = Material.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 10:
+						attribute_name = Silhouette.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 11:
+						attribute_name = Outerwear_Structure.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 12:
+						attribute_name = Pants_Structure.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 13:
+						attribute_name = Decoration.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 14 or i[0] == 15:
+						attribute_name = Neckline.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 16:
+						attribute_name = Sleeve_Length.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 17:
+						attribute_name = Sleeve_Style.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 18:
+						attribute_name = Top_Length.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 19:
+						attribute_name = Pants_Length.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 20:
+						attribute_name = Shorts_Length.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 21:
+						attribute_name = Skirt_Length.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 22:
+						attribute_name = Fit_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 23:
+						attribute_name = Waist_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 24:
+						attribute_name = Top_Closure_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 25:
+						attribute_name = Outerwear_Closure_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 26:
+						attribute_name = Bottom_Closure_Type.objects.get(pk=attribute.attribute_id)
+					elif i[0] == 27:
+						attribute_name = Front_Style.objects.get(pk=attribute.attribute_id)
+					attribute_set.append((i[1], attribute_name))
+
+		#attribute_types = hasAttribute.ATTRIBUTE_TYPE_CHOICES
+		return render(request, 'modifit/item.html', { 'item' : item, 'category' : category, 'attributes' : attribute_set })
+	else:
+		return HttpResponseRedirect('/')

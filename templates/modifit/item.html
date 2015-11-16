@@ -1,0 +1,35 @@
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>Item - Modifit</title>
+		<link rel="stylesheet" href="{% static 'modifit/bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
+		<script src="{% static 'modifit/jquery-1.11.3.min.js' %}"></script>
+		<script src="{% static 'modifit/bootstrap/js/bootstrap.min.js' %}"></script>
+	</head>
+	<body>
+		<div class="goback">
+			<a href="/wardrobe/"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Go to Wardrobe</a><br />
+			<a href="/catalogue/"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Go to Catalogue</a><br />
+		</div>
+		<br />
+		<div id="profile_item">
+			<div id="profile_item_name">{{ item.name }}</div>
+			<div id="profile_item_image">
+				<img src="{{ item.image }}" class="profile_item_img">
+			</div>
+			<div id="profile_item_attributes">
+				<span id="profile_item_category">Category: {{ category.name }}</span>
+				<br /><br />
+				{% for i in attributes %}
+					<span class="profile_item_attribute">
+						{{ i.0 }} : {{ i.1 }}<br />
+					</span>
+				{% endfor %}
+			</div>
+			<br /><br />
+		</div>
+	</body>
+</html>
