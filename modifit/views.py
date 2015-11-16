@@ -20,8 +20,8 @@ from .forms import LoginForm, RegForm
 
 """from django.contrib.auth.decorators import login_required
 @login_required(login_url='/') #if not logged in redirect to /
-def home(request):		
-	return render(request, 'modifit/home.html')"""
+def warehouse(request):		
+	return render(request, 'modifit/warehouse.html')"""
 
 """def index(request):
 	state = "Please log in below..."
@@ -44,7 +44,7 @@ def home(request):
 
 def index(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/home/')
+		return HttpResponseRedirect('/wardrobe/')
 	else:
 		error_message = ''
 		username = password = ''
@@ -57,7 +57,7 @@ def index(request):
 				if user is not None:
 					if user.is_active:
 						login(request, user)
-						return HttpResponseRedirect('/home/')
+						return HttpResponseRedirect('/wardrobe/')
 					else:
 						error_message = "Your account is inactive."
 				else:
@@ -74,7 +74,7 @@ def logging_out(request):
 
 def register(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/home/')
+		return HttpResponseRedirect('/wardrobe/')
 	else:
 		error_message = ''
 		if request.POST:
@@ -119,13 +119,13 @@ def register(request):
 
 def reg_success(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/home/')
+		return HttpResponseRedirect('/wardrobe/')
 	else:
 		return render(request, 'modifit/reg_success.html')
 
 
 @login_required(login_url='/')
-def home(request):
+def warehouse(request):
 	current_user = request.user
 	if current_user.first_name != '':
 		name = current_user.first_name
@@ -133,18 +133,20 @@ def home(request):
 		name = current_user.username
 
 	categorized = hasCategory.objects.all()
-	categorizedItems = []
+	"""categorizedItems = []
 	for i in categorized:
-		categorizedItems.append(i.item)
+		categorizedItems.append(i.item)"""
 
 	wardrobe = Wardrobe.objects.filter(user_id=request.user.id)
 	wardrobeItems = []
 	for i in wardrobe:
 		wardrobeItems.append(i.item)
 
-	items = [i for i in categorizedItems if i not in wardrobeItems]
+	#items = [i for i in categorizedItems if i not in wardrobeItems]
+	filteredCategorizedItems = [i for i in categorized if i.item not in wardrobeItems]
+	categories = list(set([i.category for i in filteredCategorizedItems]))
 
-	return render( request, 'modifit/home.html', { 'name': name, 'items': items } )
+	return render( request, 'modifit/warehouse.html', { 'name': name, 'items': filteredCategorizedItems, 'categories' : categories } )
 
 
 @login_required(login_url='/')

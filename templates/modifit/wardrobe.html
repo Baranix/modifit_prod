@@ -3,9 +3,11 @@
 <html>
 	<head>
 		<title>Your Wardrobe - Modifit</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
+		<link rel="stylesheet" href="{% static 'modifit/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
 		<script src="{% static 'modifit/jquery-1.11.3.min.js' %}"></script>
+		<script src="{% static 'modifit/bootstrap.min.js' %}"></script>
 	</head>
 	<body>
 		<h1 id="name_addItems">{{ name }}'s Wardrobe</h1>
@@ -17,26 +19,26 @@
 					<tr>
 						{% for i in wardrobe %}
 							{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}
-								<td class="row_item" id="element{{ i.item.id }}">
-									<img src='{{ i.item.image }}' class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}-{{ i.item.name }}" />
-									<br>
-									<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
-									<div class="stars">
-										<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="5" {% if i.rating == 5 %}checked{% endif %} />
-										<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
-										<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="4" {% if i.rating == 4 %}checked{% endif %} />
-										<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
-										<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="3" {% if i.rating == 3 %}checked{% endif %} />
-										<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
-										<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="2" {% if i.rating == 2 %}checked{% endif %} />
-										<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
-										<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="1" {% if i.rating == 1 %}checked{% endif %} />
-										<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
-									</div>
-									<div class="remove">
-										<button type="button" class="removeItem" onclick="removeItem({{ i.item.id }}); return false;" />Remove this item.</button>
-									</div>
-								</td>
+							<td class="row_item" id="element{{ i.item.id }}">
+								<img src='{{ i.item.image }}' class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}-{{ i.item.name }}" />
+								<br>
+								<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
+								<div class="stars">
+									<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="5" {% if i.rating == 5 %}checked{% endif %} />
+									<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
+									<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="4" {% if i.rating == 4 %}checked{% endif %} />
+									<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
+									<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="3" {% if i.rating == 3 %}checked{% endif %} />
+									<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
+									<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="2" {% if i.rating == 2 %}checked{% endif %} />
+									<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
+									<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="1" {% if i.rating == 1 %}checked{% endif %} />
+									<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
+								</div>
+								<div class="remove">
+									<button type="button" class="removeItem" onclick="removeItem({{ i.item.id }}); return false;" />Remove this item.</button>
+								</div>
+							</td>
 						{% endfor %}
 					</tr>
 				</table>
@@ -45,7 +47,7 @@
 			<input type="submit" value="Re-rate Items!" />
 		</form>
 
-		<button onclick="window.location.href='/home/'">Go back to add more items!</button>
+		<button onclick="window.location.href='/warehouse/'">Add more items!</button>
 
 		<form action="/logout/" method="post">
 			{% csrf_token %}
