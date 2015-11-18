@@ -154,7 +154,7 @@ def catalogue(request, category_name=None):
 
 	categories = list(set([i.category for i in allFilteredCategorizedItems]))
 
-	return render( request, 'modifit/catalogue.html', { 'name': name, 'items': filteredCategorizedItems, 'categories' : categories } )
+	return render( request, 'modifit/catalogue.html', { 'name': name, 'items': filteredCategorizedItems, 'categories' : categories, 'current_category' : category_name } )
 
 
 @login_required(login_url='/')
@@ -257,6 +257,18 @@ def wardrobe(request):
 	else:
 		name = current_user.username
 	wardrobe = Wardrobe.objects.filter(user_id=request.user.id)
+
+	#categorized = hasCategory.objects.all()
+
+	#items = [i for i in categorizedItems if i not in wardrobeItems]
+	#print "Category name: " + str(category_name)
+	"""if category_name is not None:
+		filteredCategorizedItems = [i for i in wardrobe_items if i.category.name == category_name]
+	else:
+		filteredCategorizedItems = wardrobe_items
+
+	categories = list(set([i.category for i in allFilteredCategorizedItems]))"""
+
 	return render(request, 'modifit/wardrobe.html', { 'name' : name, 'wardrobe' : wardrobe })
 
 def item(request, item_id=None):

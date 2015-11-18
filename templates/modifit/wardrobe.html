@@ -14,6 +14,16 @@
 
 		<!--<form action="/rate/" method="post">
 			{% csrf_token %}-->
+		<!--<ul class="nav nav-tabs">
+			<li role="presentation" id="tabAll"{% if current_category == None %} class="active"{% endif %}>
+				<a href="/wardrobe/">All</a>
+			</li>
+			{% for c in categories %}
+				<li role="presentation" id="tab{{ c.name }}"{% if current_category == c.name %} class="active"{% endif %}>
+					<a href="{% url 'wardrobe_category' c.name %}">{{ c.name }}</a>
+				</li>
+			{% endfor %}
+		</ul>-->
 		<div class="content">
 			<table id="new_set">
 				<tr>
@@ -39,7 +49,7 @@
 								<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
 							</div>
 							<div class="remove">
-								<button type="button" class="removeItem" onclick="removeItem({{ i.item.id }}); return false;" />Remove this item.</button>
+								<button type="button" class="removeItem" onclick="removeItem({{ i.item.id }}); return false;" />Remove Item</button>
 							</div>
 						</td>
 					{% endfor %}
@@ -50,11 +60,9 @@
 			<!--<input type="submit" value="Re-rate Items!" />
 		</form>-->
 
-		<div id="goto">
-			<a class="goto" href='/catalogue/'>
-				Add more items!
-			</a>
-		</div>
+		<a class="goto" href='/catalogue/'>
+			Add Items
+		</a>
 
 		<form action="/logout/" method="post">
 			{% csrf_token %}

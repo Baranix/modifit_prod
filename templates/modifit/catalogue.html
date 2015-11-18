@@ -10,17 +10,17 @@
 		<script src="{% static 'modifit/bootstrap/js/bootstrap.min.js' %}"></script>
 	</head>
 	<body>
-		<h1 id="name_addItems">{{ name }}, get items!</h1>
+		<h1 id="name_addItems">Catalogue</h1>
 
 		<!--<form action="/rate/" method="post">
 			{% csrf_token %}-->
 		<ul class="nav nav-tabs">
-			<li role="presentation" id="tabAll" class="active">
+			<li role="presentation" id="tabAll"{% if current_category == None %} class="active"{% endif %}>
 				<a href="/catalogue/">All</a>
 			</li>
 			{% for c in categories %}
-				<li role="presentation" id="tab{{ c.name }}">
-					<a href="{% url 'catalogue_category' c.name %}">{{ c.name }}</a>
+				<li role="presentation" id="tab{{ c.name }}"{% if current_category == c.name %} class="active"{% endif %}>
+					<a href="{% url 'catalogue_category' c.name %}">{{ c.name|title }}{% if c.name == "dress" %}es{% elif c.name == "pants" or c.name == 'leggings' %}{% else %}s{% endif %}</a>
 				</li>
 			{% endfor %}
 		</ul>
@@ -36,7 +36,7 @@
 							<br>
 							<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
 							<div class="remove" id="add{{ i.item.id }}">
-								<button type="button" class="removeItem" onclick="addItem({{ i.item.id }}); return false;" />Add this item.</button>
+								<button type="button" class="removeItem" onclick="addItem({{ i.item.id }}); return false;" />Add Item</button>
 							</div>
 							<!--<div class="stars">
 								<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" value="5" />
@@ -58,11 +58,10 @@
 			<!--<input type="submit" value="Add Items to Wardrobe" />
 		</form>-->
 
-		<div id="goto">
-			<a class="goto" href='/wardrobe/'>
-				Back to Wardrobe!
-			</a>
-		</div>
+
+		<a class="goto" href='/wardrobe/'>
+			Back to Wardrobe
+		</a>
 
 		<form action="/logout/" method="post">
 			{% csrf_token %}

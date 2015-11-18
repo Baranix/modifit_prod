@@ -10,11 +10,6 @@
 		<script src="{% static 'modifit/bootstrap/js/bootstrap.min.js' %}"></script>
 	</head>
 	<body>
-		<div class="goback">
-			<a href="/wardrobe/"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Go to Wardrobe</a><br />
-			<a href="/catalogue/"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Go to Catalogue</a><br />
-		</div>
-		<br />
 		<div id="profile_item">
 			<div id="profile_item_name">{{ item.name }}</div>
 			<div id="profile_item_image">
@@ -22,14 +17,23 @@
 			</div>
 			<div id="profile_item_attributes">
 				<span id="profile_item_category">Category: {{ category.name }}</span>
-				<br /><br />
+				<!--<br /><br />
 				{% for i in attributes %}
 					<span class="profile_item_attribute">
 						{{ i.0 }} : {{ i.1 }}<br />
 					</span>
-				{% endfor %}
+				{% endfor %}-->
 			</div>
-			<br /><br />
+			<br />
+		</div>
+		<div class="goback">
+			<a href="/wardrobe/" class="goto">
+				Go to Wardrobe
+			</a>
+			<a href="/catalogue/" class="goto">
+				Go to Catalogue
+			</a>
+			<br />
 		</div>
 	</body>
 </html>

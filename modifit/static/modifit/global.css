@@ -108,7 +108,7 @@ input:focus
 	box-shadow: 0px 0px 7px #000000;
 }
 
-input[type='submit'], input[type='button'], button
+input[type='submit'], input[type='button'], button, .goto
 {
 	margin-top: 15px;
 	background: #CF9ABE;
@@ -119,8 +119,22 @@ input[type='submit'], input[type='button'], button
 	border-radius: 10px;
 	font-family: Asap;
 	font-size: 14px;
-	color: #340023;
+	color: #340023 !important;
 	cursor: pointer;
+}
+
+.goto
+{
+	color: #340023 !important;
+	/*margin-top: 10px;*/
+	text-align: center;
+	padding-top: 2px;
+	display: block;
+}
+
+.goto:hover
+{
+	text-decoration: none;
 }
 
 .alert_box
@@ -194,6 +208,7 @@ input[type='submit'], input[type='button'], button
 {
 	width: 200px;
 	margin-top: 3px !important;
+	margin-bottom: 5px;
 }
 
 .in_wardrobe
@@ -203,7 +218,7 @@ input[type='submit'], input[type='button'], button
 	color: #CF9ABE;
 }
 
-.goto
+/*.goto
 {
 	color: #CF9ABE;
 }
@@ -211,7 +226,7 @@ input[type='submit'], input[type='button'], button
 #goto
 {
 	text-align: center;
-}
+}*/
 
 
 /* STAR RATINGS */
@@ -280,12 +295,25 @@ label.star:before {
 	font-size: 24px;
 	font-weight: bolder;
 	margin-top: 10px;
+	text-align: center;
+}
+
+#profile_item_image
+{
+	text-align: center;
 }
 
 .profile_item_img
 {
 	width: 400px;
 	height: auto;
+}
+
+#profile_item_attributes
+{
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .goback
