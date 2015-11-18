@@ -20,7 +20,7 @@
 			</li>
 			{% for c in categories %}
 				<li role="presentation" id="tab{{ c.name }}"{% if current_category == c.name %} class="active"{% endif %}>
-					<a href="{% url 'catalogue_category' c.name %}">{{ c.name|title }}{% if c.name == "dress" %}es{% elif c.name == "pants" or c.name == 'leggings' %}{% else %}s{% endif %}</a>
+					<a href="{% url 'catalogue_category' c.name %}">{{ c.name|title }}{% if c.name == "dress" %}es{% elif c.name == "pants" or c.name == 'leggings' or c.name == 'shorts' %}{% else %}s{% endif %}</a>
 				</li>
 			{% endfor %}
 		</ul>
