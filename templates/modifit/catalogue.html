@@ -72,31 +72,37 @@
 			function addItem(item_id)
 			{
 				console.log("Adding: " + item_id);
-				$.ajax({
-					url : "/add_to_wardrobe/", // the endpoint
-					type : "POST", // http method
-					data : { itemToAdd : item_id,
-						csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+				var request_sent = false;
+				if (!request_sent)
+				{
+					request_sent = true;
+					$.ajax({
+						url : "/add_to_wardrobe/", // the endpoint
+						type : "POST", // http method
+						data : { itemToAdd : item_id,
+							csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
 
 
-					// handle a successful response
-					success : function(json)
-					{
-						console.log(json); // log the returned json to the console
-						console.log("success"); // another sanity check
-						$('#element' + item_id).addClass("in_wardrobe");
-						$('#add' + item_id).html('<span class="glyphicon glyphicon-ok" aria-hidden="true""></span> Item added');
+						// handle a successful response
+						success : function(json)
+						{
+							console.log(json); // log the returned json to the console
+							console.log("success"); // another sanity check
+							$('#element' + item_id).addClass("in_wardrobe");
+							$('#add' + item_id).html('<span class="glyphicon glyphicon-ok" aria-hidden="true""></span> Item added');
 
-					},
+						},
 
-					// handle a non-successful response
-					error : function(xhr,errmsg,err)
-					{
-						$('#error').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-						" <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-						console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-					}
-				});
+						// handle a non-successful response
+						error : function(xhr,errmsg,err)
+						{
+							$('#error').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+							" <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+							console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+						}
+					});
+				}
+				
 			}
 
 		</script>

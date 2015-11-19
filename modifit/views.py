@@ -234,10 +234,13 @@ def add_to_wardrobe(request):
 		item = request.POST.get('itemToAdd')
 		response_data = {}
 
-		wardrobe = Wardrobe( user_id=request.user.id, item_id=item )
-		wardrobe.save()
-
-		response_data['result'] = 'Add item successful!'
+		try:
+			wardrobe = Wardrobe.objects.get(user_id=request.user.id, item_id=item)
+			response_data['result'] = 'Item is already in the Wardrobe!'
+		except Wardrobe.DoesNotExist:
+			wardrobe = Wardrobe( user_id=request.user.id, item_id=item )
+			wardrobe.save()
+			response_data['result'] = 'Add item successful!'
 
 		return HttpResponse(
 			json.dumps(response_data),
