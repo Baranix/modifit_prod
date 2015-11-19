@@ -259,3 +259,22 @@ class Wardrobe(models.Model):
 
 	def __unicode__(self):
 		return str(self.user) + "'s " + str(self.item)
+
+
+#---------------------------------------------------- Recommendations -------------------------------------------
+
+class Item_Similarity(models.Model):
+	item_1 = models.ForeignKey(Item, related_name="item_1")
+	item_2 = models.ForeignKey(Item, related_name="item_2")
+	score = models.DecimalField(max_digits=10, decimal_places=5, default=0)
+
+class User_Similarity(models.Model):
+	user_1 = models.ForeignKey(User, related_name="user_1")
+	user_2 = models.ForeignKey(User, related_name="user_2")
+	score = models.DecimalField(max_digits=10, decimal_places=5, default=0)
+
+class User_Recommendations(models.Model):
+	user = models.ForeignKey(User)
+	item = models.ForeignKey(Item)
+	projected_rating = models.DecimalField(max_digits=10, decimal_places=5, default=0)
+	user_rating = models.PositiveIntegerField(default=0)
