@@ -24,15 +24,15 @@
 							<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
 							<div class="stars">
 								<span class="glyphicon glyphicon-remove-sign reset_rate" aria-hidden="true" onclick="rate({{ i.item.id }}, 0)"></span>
-								<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 5)" value="5" {% if i.rating == 5 %}checked{% endif %} />
+								<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 5)" value="5" {% if i.user_rating == 5 %}checked{% endif %} />
 								<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
-								<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 4)" value="4" {% if i.rating == 4 %}checked{% endif %} />
+								<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 4)" value="4" {% if i.user_rating == 4 %}checked{% endif %} />
 								<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
-								<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 3)" value="3" {% if i.rating == 3 %}checked{% endif %} />
+								<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 3)" value="3" {% if i.user_rating == 3 %}checked{% endif %} />
 								<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
-								<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 2)" value="2" {% if i.rating == 2 %}checked{% endif %} />
+								<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 2)" value="2" {% if i.user_rating == 2 %}checked{% endif %} />
 								<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
-								<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 1)" value="1" {% if i.rating == 1 %}checked{% endif %} />
+								<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 1)" value="1" {% if i.user_rating == 1 %}checked{% endif %} />
 								<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
 							</div>
 						</td>
