@@ -35,15 +35,16 @@
 								<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 1)" value="1" {% if i.rating == 1 %}checked{% endif %} />
 								<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
 							</div>
-							<div class="remove">
-								<button type="button" class="removeItem" onclick="removeItem({{ i.item.id }}); return false;" />Remove Item</button>
-							</div>
 						</td>
 					{% endfor %}
 				</tr>
 			</table>
 		</div>
 		<div id="error"></div>
+
+		<a class="goto" href='/wardrobe/'>
+			Back to Wardrobe
+		</a>
 
 		<script>
 
