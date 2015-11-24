@@ -1,0 +1,86 @@
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>Recommendations - Modifit</title>
+		<link rel="stylesheet" href="{% static 'modifit/bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'modifit/global.css' %}" />
+		<script src="{% static 'modifit/jquery-1.11.3.min.js' %}"></script>
+		<script src="{% static 'modifit/bootstrap/js/bootstrap.min.js' %}"></script>
+	</head>
+	<body>
+		<h1 id="name_addItems">Recommendations</h1>
+		<div class="content">
+			<table id="new_set">
+				<tr>
+					{% for i in recommendations %}
+						{% if forloop.counter0|divisibleby:5 %}</tr><tr>{% endif %}
+						<td class="row_item" id="element{{ i.item.id }}">
+							<a href="{% url 'item' i.item.id %}">
+								<img src='{{ i.item.image }}' class="item_image" id="item{{ i.item.id }}" alt="{{ i.item.id }}-{{ i.item.name }}" />
+							</a>
+							<br>
+							<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
+							<div class="stars">
+								<span class="glyphicon glyphicon-remove-sign reset_rate" aria-hidden="true" onclick="rate({{ i.item.id }}, 0)"></span>
+								<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 5)" value="5" {% if i.rating == 5 %}checked{% endif %} />
+								<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
+								<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 4)" value="4" {% if i.rating == 4 %}checked{% endif %} />
+								<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
+								<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 3)" value="3" {% if i.rating == 3 %}checked{% endif %} />
+								<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
+								<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 2)" value="2" {% if i.rating == 2 %}checked{% endif %} />
+								<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
+								<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 1)" value="1" {% if i.rating == 1 %}checked{% endif %} />
+								<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
+							</div>
+							<div class="remove">
+								<button type="button" class="removeItem" onclick="removeItem({{ i.item.id }}); return false;" />Remove Item</button>
+							</div>
+						</td>
+					{% endfor %}
+				</tr>
+			</table>
+		</div>
+		<div id="error"></div>
+
+		<script>
+
+			function rate(item_id, rating_value)
+			{
+				console.log(item_id);
+				console.log(rating_value);
+
+				$.ajax({
+					url : "/rate_recommendation/", // the endpoint
+					type : "POST", // http method
+					data : { itemToRate : item_id,
+						rating : rating_value,
+						csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+
+					// handle a successful response
+					success : function(json)
+					{
+						console.log(json); // log the returned json to the console
+						console.log("success"); // another sanity check
+						if(rating_value==0)
+						{
+							$('input[name=rate' + item_id + ']:checked').prop('checked',false);
+						}
+					},
+
+					// handle a non-successful response
+					error : function(xhr,errmsg,err)
+					{
+						$('#error').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+						" <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+						console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+					}
+				});
+			};
+
+		</script>
+	</body>
+</html>

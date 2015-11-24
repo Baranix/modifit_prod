@@ -7,9 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
 import json
+#import cosine_similarity, jaccard_index
 
 from .models import Item, hasCategory, Wardrobe, hasAttribute
 from .models import Sweater_Type, Jacket_Type, Blazer_Type, Sweatshirt_Type, Jumpsuit_Type, Style, Color, Pattern, Material, Silhouette, Outerwear_Structure, Pants_Structure, Decoration, Neckline, Sleeve_Length, Sleeve_Style, Top_Length, Pants_Length, Shorts_Length, Skirt_Length, Fit_Type, Waist_Type, Top_Closure_Type, Outerwear_Closure_Type, Bottom_Closure_Type, Front_Style
+from .models import User_Similarity, User_Recommendations
 
 from .forms import LoginForm, RegForm
 
@@ -278,7 +280,7 @@ def item(request, item_id=None):
 	if item_id is not None:
 		item = Item.objects.get(pk=item_id)
 		category = hasCategory.objects.get(item_id=item_id).category
-		attributes = hasAttribute.objects.filter(item_id=item_id)
+		attributes = hasAttribute.objects.filter(item_id=item_id).order_by('attribute_type')
 
 		attribute_set = []
 		attribute_tables = [Sweater_Type, Jacket_Type, Blazer_Type, Sweatshirt_Type, Jumpsuit_Type, Style, Color, Pattern, Material, Silhouette, Outerwear_Structure, Pants_Structure, Decoration, Neckline, Sleeve_Length, Sleeve_Style, Top_Length, Pants_Length, Shorts_Length, Skirt_Length, Fit_Type, Waist_Type, Top_Closure_Type, Outerwear_Closure_Type, Bottom_Closure_Type, Front_Style]
@@ -343,9 +345,69 @@ def item(request, item_id=None):
 						attribute_name = Bottom_Closure_Type.objects.get(pk=attribute.attribute_id)
 					elif i[0] == 27:
 						attribute_name = Front_Style.objects.get(pk=attribute.attribute_id)
+
+					"""if attribute_set:
+						print attribute_set[-1][0]
+						print i[1]
+					if attribute_set and attribute_set[-1][0] == str(i[1]):
+						attribute_set[-1][1] = attribute_set[-1][1] + ", " + attribute_name
+					else:"""
 					attribute_set.append((i[1], attribute_name))
 
 		#attribute_types = hasAttribute.ATTRIBUTE_TYPE_CHOICES
 		return render(request, 'modifit/item.html', { 'item' : item, 'category' : category, 'attributes' : attribute_set })
 	else:
 		return HttpResponseRedirect('/')
+
+"""@login_required(login_url='/')
+def recommend(request, recommender=None):
+	results=""
+	if recommender is not None:
+		
+		if recommender == "collab":
+			results = cosine_similarity.main()
+
+			for user_id in results:
+				user = User.objects.get(pk=user_id)
+				for neighbor_id in results[user_id]:
+					neighbor = User.objects.get(pk=neighbor_id)
+					similarity = User_Similarity(user_1=user, user_2=neighbor, score=results[user_id][neighbor_id])
+					similarity.save()
+
+		elif recommender == "content":
+			results = jaccard_index.main(1)
+		else:
+			results = "Hybrid not yet available."
+	return render(request, 'modifit/recommend.html', { 'results' : results })"""
+
+@login_required(login_url='/')
+def recommendations(request):
+	#categorized = hasCategory.objects.all()
+	#wardrobe = Wardrobe.objects.filter(user_id=request.user.id)
+	#wardrobe_items = [i.item for i in wardrobe]
+	recommendations = User_Recommendations.objects.filter(user_id=request.user.id) #[i for i in categorized if i.item not in wardrobe_items]
+	return render(request, 'modifit/recommendations.html', { 'recommendations' : recommendations })
+
+
+@login_required(login_url='/')
+def rate_recommendation(request):
+	if request.POST:
+		item = request.POST.get('itemToRate')
+		rate = request.POST.get('rating')
+		response_data = {}
+
+		user_rec = User_Recommendations.objects.get( user_id=request.user.id, item_id=item )
+		user_rec.user_rating = rate
+		user_rec.save()
+
+		response_data['result'] = 'Rate item successful!'
+
+		return HttpResponse(
+			json.dumps(response_data),
+			content_type="application/json"
+		)
+	else:
+		return HttpResponse(
+			json.dumps({"nothing to see": "this isn't happening"}),
+			content_type="application/json"
+		)
