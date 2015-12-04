@@ -22,18 +22,19 @@
 							</a>
 							<br>
 							<input type="hidden" name="item_id_{{ i.item.id }}" id="item_id_{{ i.item.id }}" value="{{ i.item.id }}" />
-							<div class="stars">
-								<span class="glyphicon glyphicon-remove-sign reset_rate" aria-hidden="true" onclick="rate({{ i.item.id }}, 0)"></span>
-								<input class="star star-5" id="star-5-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 5)" value="5" {% if i.user_rating == 5 %}checked{% endif %} />
-								<label class="star star-5" for="star-5-{{ i.item.id }}"></label>
-								<input class="star star-4" id="star-4-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 4)" value="4" {% if i.user_rating == 4 %}checked{% endif %} />
-								<label class="star star-4" for="star-4-{{ i.item.id }}"></label>
-								<input class="star star-3" id="star-3-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 3)" value="3" {% if i.user_rating == 3 %}checked{% endif %} />
-								<label class="star star-3" for="star-3-{{ i.item.id }}"></label>
-								<input class="star star-2" id="star-2-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 2)" value="2" {% if i.user_rating == 2 %}checked{% endif %} />
-								<label class="star star-2" for="star-2-{{ i.item.id }}"></label>
-								<input class="star star-1" id="star-1-{{ i.item.id }}" type="radio" name="rate{{ i.item.id }}" onclick="rate({{ i.item.id }}, 1)" value="1" {% if i.user_rating == 1 %}checked{% endif %} />
-								<label class="star star-1" for="star-1-{{ i.item.id }}"></label>
+							<input type="range" name="rate{{ i.item.id }}" min="-5" max="5" value="{{ i.user_rating }}" onchange="highlightLabel(this.value, {{ i.item.id }})" />
+							<div class="range_labels">
+								<div class="range_label{% if i.user_rating == -5 %} highlighted{% endif %}" id="range{{ i.item.id }}-5" onclick="changeValue({{ i.item.id }}, -5)">-5</div>
+								<div class="range_label{% if i.user_rating == -4 %} highlighted{% endif %}" id="range{{ i.item.id }}-4" onclick="changeValue({{ i.item.id }}, -4)">-4</div>
+								<div class="range_label{% if i.user_rating == -3 %} highlighted{% endif %}" id="range{{ i.item.id }}-3" onclick="changeValue({{ i.item.id }}, -3)">-3</div>
+								<div class="range_label{% if i.user_rating == -2 %} highlighted{% endif %}" id="range{{ i.item.id }}-2" onclick="changeValue({{ i.item.id }}, -2)">-2</div>
+								<div class="range_label{% if i.user_rating == -1 %} highlighted{% endif %}" id="range{{ i.item.id }}-1" onclick="changeValue({{ i.item.id }}, -1)">-1</div>
+								<div class="range_label{% if i.user_rating == 0 %} highlighted{% endif %}" id="range{{ i.item.id }}0" onclick="changeValue({{ i.item.id }}, 0)">0</div>
+								<div class="range_label{% if i.user_rating == 1 %} highlighted{% endif %}" id="range{{ i.item.id }}1" onclick="changeValue({{ i.item.id }}, 1)">1</div>
+								<div class="range_label{% if i.user_rating == 2 %} highlighted{% endif %}" id="range{{ i.item.id }}2" onclick="changeValue({{ i.item.id }}, 2)">2</div>
+								<div class="range_label{% if i.user_rating == 3 %} highlighted{% endif %}" id="range{{ i.item.id }}3" onclick="changeValue({{ i.item.id }}, 3)">3</div>
+								<div class="range_label{% if i.user_rating == 4 %} highlighted{% endif %}" id="range{{ i.item.id }}4" onclick="changeValue({{ i.item.id }}, 4)">4</div>
+								<div class="range_label{% if i.user_rating == 5 %} highlighted{% endif %}" id="range{{ i.item.id }}5" onclick="changeValue({{ i.item.id }}, 5)">5</div>
 							</div>
 						</td>
 					{% endfor %}
@@ -48,8 +49,30 @@
 
 		<script>
 
+			function changeValue(item_id, rating_value)
+			{
+				$('input[name=rate' + item_id + ']').val(rating_value);
+
+				highlightLabel(rating_value, item_id);
+			}
+
+			function highlightLabel(rating_value, item_id)
+			{
+				var i;
+				for( i=-5; i<=5; i++)
+				{
+					$('#range'+ item_id + i).removeClass("highlighted");
+				}
+				
+				$('#range'+ item_id + rating_value ).addClass("highlighted");
+				//console.log(obj);
+
+				rate(item_id, rating_value)
+			}
+
 			function rate(item_id, rating_value)
 			{
+				//rating_value = $("input[name='rate'" + item_id +"]").val();
 				console.log(item_id);
 				console.log(rating_value);
 
@@ -66,10 +89,10 @@
 					{
 						console.log(json); // log the returned json to the console
 						console.log("success"); // another sanity check
-						if(rating_value==0)
+						/*if(rating_value==0)
 						{
 							$('input[name=rate' + item_id + ']:checked').prop('checked',false);
-						}
+						}*/
 					},
 
 					// handle a non-successful response

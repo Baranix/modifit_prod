@@ -320,3 +320,36 @@ label.star:before {
 {
 	margin: 10px;
 }
+
+input[type='range']
+{
+	width: 200px;
+}
+
+input[type=range]:focus
+{
+    outline: none;
+    box-shadow: none;
+}
+
+.range_labels
+{
+	width: 200px;
+	text-align: center;
+}
+
+.range_label
+{
+	width: 9%;
+	position: relative;
+	float: left;
+	text-align: center;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.highlighted
+{
+	background: #A95B8F;
+	color: #5B0C41;
+}
