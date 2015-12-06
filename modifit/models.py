@@ -277,4 +277,7 @@ class User_Recommendations(models.Model):
 	user = models.ForeignKey(User)
 	item = models.ForeignKey(Item)
 	projected_rating = models.DecimalField(max_digits=10, decimal_places=5, default=0)
-	user_rating = models.PositiveIntegerField(default=0)
+	user_rating = models.IntegerField(default=0)
+
+"""class Temp(models.Model):
+	name = models.CharField(max_length=100)"""
